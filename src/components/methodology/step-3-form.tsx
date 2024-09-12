@@ -36,15 +36,9 @@ export function Step3Form() {
 		if (methodologyCalculator.step1Values) {
 			const { numberOfQuestions } = methodologyCalculator.step1Values;
 			const newKeys = Array(numberOfQuestions).fill(-1);
-			if (methodologyCalculator.step3Values?.keys.length === 0)
-				replace(newKeys);
-			else replace(methodologyCalculator.step3Values?.keys);
+			replace(newKeys);
 		}
-	}, [
-		methodologyCalculator.step1Values,
-		methodologyCalculator.step3Values,
-		replace,
-	]);
+	}, [methodologyCalculator.step1Values, replace]);
 
 	function onSubmit(values: z.infer<typeof step3Schema>) {
 		methodologyCalculator.setStep3Values(values);
