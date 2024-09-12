@@ -70,7 +70,7 @@ export function ResultsForm() {
 			</div>
 			<div className="flex flex-col gap-8 max-w-width-sm w-full">
 				<div className="flex flex-col gap-1">
-					<span className="flex items-center text-display-lg/display-lg font-semibold text-gray-600">
+					<span className="flex items-center gap-1 text-display-lg/display-lg font-semibold text-gray-600">
 						<span className="text-brand-600">{grade}</span>
 						<span>/</span>
 						<span>{maxGrade}</span>

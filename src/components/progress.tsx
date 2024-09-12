@@ -1,7 +1,7 @@
-import * as React from "react";
+import React, { useEffect, useRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 const dotVariants = cva(
 	"inline-block border-[1.5px] rounded-full relative before:content-[''] before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 transition-all",
@@ -16,7 +16,7 @@ const dotVariants = cva(
 				incomplete:
 					"border-gray-200 bg-base-white before:size-2 before:rounded-full before:bg-gray-300",
 				complete:
-					"border-brand-600 bg-brand-600 before:w-3 before:h-[0.65625rem] before:bg-tick before:bg-contain before:bg-center",
+					"border-brand-600 bg-brand-600 before:w-3 before:h-[0.65625rem] before:bg-tick before:bg-no-repeat before:bg-contain before:bg-center",
 				current:
 					"border-brand-600 bg-brand-600 shadow-ring before:size-2 before:rounded-full before:bg-brand-50",
 			},
@@ -58,26 +58,41 @@ export interface ProgressProps
 
 const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
 	({ className, size, steps, currentStep, ...props }, ref) => {
+		const isFirstRender = useRef(true);
+
+		useEffect(() => {
+			isFirstRender.current = false;
+		}, []);
+
 		return (
 			<div
 				ref={ref}
 				className={cn(progressVariants({ size }), className)}
 				{...props}
 			>
-				{Array.from({ length: steps }, (_, i) => (
-					<Dot
-						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-						key={i}
-						size={size}
-						state={
-							i < currentStep
-								? "complete"
-								: i === currentStep
-									? "current"
-									: "incomplete"
-						}
-					/>
-				))}
+				<AnimatePresence>
+					{Array.from({ length: steps }, (_, i) => (
+						<motion.div
+							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+							key={i}
+							initial={{ opacity: isFirstRender.current ? 1 : 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.2 }}
+						>
+							<Dot
+								size={size}
+								state={
+									i < currentStep
+										? "complete"
+										: i === currentStep
+											? "current"
+											: "incomplete"
+								}
+							/>
+						</motion.div>
+					))}
+				</AnimatePresence>
 			</div>
 		);
 	},
