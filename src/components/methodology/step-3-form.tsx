@@ -97,7 +97,7 @@ export function Step3Form() {
 														}
 														onClick={() => field.onChange(variantIndex)}
 														className={cn(
-															"w-full shadow-none first-of-type:rounded-r-none last-of-type:rounded-s-none border-r-0 last-of-type:border-r",
+															"w-full shadow-none [&:not(:last-of-type)]:rounded-e-none [&:not(:first-of-type)]:rounded-s-none border-r-0 last-of-type:border-r",
 															field.value === variantIndex && "border-r",
 														)}
 													>
