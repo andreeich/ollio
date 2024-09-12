@@ -56,16 +56,21 @@ type MethodologyCalculatorStore = {
 	setStep4Values: (values: z.infer<typeof step4Schema>) => void;
 	setCalculationStep: (value: number) => void;
 	setRequiredCalculationStep: (value: number) => void;
+	reset: () => void;
 };
 
 export const useMethodologyCalculator = create<MethodologyCalculatorStore>(
 	(set) => ({
 		calculationStep: 1,
 		requiredCalculationSteps: 3,
-		step1Values: undefined,
-		step2Values: undefined,
-		step3Values: undefined,
-		step4Values: undefined,
+		step1Values: {
+			numberOfQuestions: 3,
+			numberOfVariants: 2,
+			isDifferentScores: false,
+		},
+		step2Values: { answers: [] },
+		step3Values: { keys: [] },
+		step4Values: { keyCompliance: 1, variantCompliance: [] },
 		setStep1Values: (values: z.infer<typeof step1Schema>) => {
 			set({ step1Values: values });
 		},
@@ -83,6 +88,20 @@ export const useMethodologyCalculator = create<MethodologyCalculatorStore>(
 		},
 		setRequiredCalculationStep: (value: number) => {
 			set({ requiredCalculationSteps: value });
+		},
+		reset: () => {
+			set({
+				calculationStep: 1,
+				requiredCalculationSteps: 3,
+				step1Values: {
+					numberOfQuestions: 3,
+					numberOfVariants: 2,
+					isDifferentScores: false,
+				},
+				step2Values: { answers: [] },
+				step3Values: { keys: [] },
+				step4Values: { keyCompliance: 1, variantCompliance: [] },
+			});
 		},
 	}),
 );

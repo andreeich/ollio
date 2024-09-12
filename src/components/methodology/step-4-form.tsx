@@ -25,8 +25,8 @@ export function Step4Form() {
 	const form = useForm<z.infer<typeof step4Schema>>({
 		resolver: zodResolver(step4Schema),
 		defaultValues: {
-			keyCompliance: 1,
-			variantCompliance: [],
+			keyCompliance: methodologyCalculator.step4Values?.keyCompliance,
+			variantCompliance: methodologyCalculator.step4Values?.variantCompliance,
 		},
 	});
 
@@ -46,6 +46,9 @@ export function Step4Form() {
 	function onSubmit(values: z.infer<typeof step4Schema>) {
 		methodologyCalculator.setStep4Values(values);
 		methodologyCalculator.setCalculationStep(5);
+	}
+	function onBack() {
+		methodologyCalculator.setCalculationStep(3);
 	}
 
 	return (
@@ -113,9 +116,20 @@ export function Step4Form() {
 							/>
 						))}
 					</div>
-					<Button className="w-full" size="md" type="submit">
-						Заповнити ключі
-					</Button>
+					<div className="flex flex-col md:flex-row-reverse gap-3">
+						<Button className="w-full" size="md" type="submit">
+							Розрахувати
+						</Button>
+						<Button
+							variant="secondary"
+							className="w-full"
+							size="md"
+							type="button"
+							onClick={onBack}
+						>
+							Назад
+						</Button>
+					</div>
 				</form>
 			</Form>
 		</div>

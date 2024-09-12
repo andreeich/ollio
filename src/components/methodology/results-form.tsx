@@ -48,8 +48,7 @@ export function ResultsForm() {
 	}, [methodologyCalculator]);
 
 	function onClick() {
-		methodologyCalculator.setCalculationStep(1);
-		methodologyCalculator.setRequiredCalculationStep(3);
+		methodologyCalculator.reset();
 	}
 
 	return (

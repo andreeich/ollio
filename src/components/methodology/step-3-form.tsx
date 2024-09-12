@@ -23,7 +23,7 @@ export function Step3Form() {
 	const form = useForm<z.infer<typeof step3Schema>>({
 		resolver: zodResolver(step3Schema),
 		defaultValues: {
-			keys: [],
+			keys: methodologyCalculator.step3Values?.keys,
 		},
 	});
 
@@ -36,9 +36,15 @@ export function Step3Form() {
 		if (methodologyCalculator.step1Values) {
 			const { numberOfQuestions } = methodologyCalculator.step1Values;
 			const newKeys = Array(numberOfQuestions).fill(-1);
-			replace(newKeys);
+			if (methodologyCalculator.step3Values?.keys.length === 0)
+				replace(newKeys);
+			else replace(methodologyCalculator.step3Values?.keys);
 		}
-	}, [methodologyCalculator.step1Values, replace]);
+	}, [
+		methodologyCalculator.step1Values,
+		methodologyCalculator.step3Values,
+		replace,
+	]);
 
 	function onSubmit(values: z.infer<typeof step3Schema>) {
 		methodologyCalculator.setStep3Values(values);
@@ -47,6 +53,9 @@ export function Step3Form() {
 		} else {
 			methodologyCalculator.setCalculationStep(5);
 		}
+	}
+	function onBack() {
+		methodologyCalculator.setCalculationStep(2);
 	}
 
 	return (
@@ -112,9 +121,22 @@ export function Step3Form() {
 							/>
 						))}
 					</div>
-					<Button className="w-full" size="md" type="submit">
-						Заповнити ключі
-					</Button>
+					<div className="flex flex-col md:flex-row-reverse gap-3">
+						<Button className="w-full" size="md" type="submit">
+							{methodologyCalculator.step1Values?.isDifferentScores
+								? "Заповнити вагу відповідей"
+								: "Розрахувати"}
+						</Button>
+						<Button
+							variant="secondary"
+							className="w-full"
+							size="md"
+							type="button"
+							onClick={onBack}
+						>
+							Назад
+						</Button>
+					</div>
 				</form>
 			</Form>
 		</div>

@@ -27,9 +27,12 @@ export function Step1Form() {
 	const form = useForm<z.infer<typeof step1Schema>>({
 		resolver: zodResolver(step1Schema),
 		defaultValues: {
-			numberOfQuestions: 3,
-			numberOfVariants: 2,
-			isDifferentScores: false,
+			numberOfQuestions:
+				methodologyCalculator.step1Values?.numberOfQuestions || 3,
+			numberOfVariants:
+				methodologyCalculator.step1Values?.numberOfVariants || 2,
+			isDifferentScores:
+				methodologyCalculator.step1Values?.isDifferentScores || false,
 		},
 	});
 

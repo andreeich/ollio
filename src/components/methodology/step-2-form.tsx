@@ -23,7 +23,7 @@ export function Step2Form() {
 	const form = useForm<z.infer<typeof step2Schema>>({
 		resolver: zodResolver(step2Schema),
 		defaultValues: {
-			answers: [],
+			answers: methodologyCalculator.step2Values?.answers,
 		},
 	});
 
@@ -36,13 +36,22 @@ export function Step2Form() {
 		if (methodologyCalculator.step1Values) {
 			const { numberOfQuestions } = methodologyCalculator.step1Values;
 			const newAnswers = Array(numberOfQuestions).fill(-1);
-			replace(newAnswers);
+			if (methodologyCalculator.step2Values?.answers.length === 0)
+				replace(newAnswers);
+			else replace(methodologyCalculator.step2Values?.answers);
 		}
-	}, [methodologyCalculator.step1Values, replace]);
+	}, [
+		methodologyCalculator.step1Values,
+		methodologyCalculator.step2Values,
+		replace,
+	]);
 
 	function onSubmit(values: z.infer<typeof step2Schema>) {
 		methodologyCalculator.setStep2Values(values);
 		methodologyCalculator.setCalculationStep(3);
+	}
+	function onBack() {
+		methodologyCalculator.setCalculationStep(1);
 	}
 
 	return (
@@ -108,9 +117,20 @@ export function Step2Form() {
 							/>
 						))}
 					</div>
-					<Button className="w-full" size="md" type="submit">
-						Заповнити ключі
-					</Button>
+					<div className="flex flex-col md:flex-row-reverse gap-3">
+						<Button className="w-full" size="md" type="submit">
+							Заповнити ключі
+						</Button>
+						<Button
+							variant="secondary"
+							className="w-full"
+							size="md"
+							type="button"
+							onClick={onBack}
+						>
+							Назад
+						</Button>
+					</div>
 				</form>
 			</Form>
 		</div>

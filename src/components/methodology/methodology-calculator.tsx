@@ -22,10 +22,10 @@ export function MethodologyCalculator() {
 				return (
 					<motion.div
 						key="step-1"
-						initial={{ translateX: isFirstRender.current ? "0%" : "-100%" }}
-						animate={{ translateX: "0%" }}
-						exit={{ translateX: "-100%" }}
-						transition={{ duration: 0.2 }}
+						initial={{ opacity: isFirstRender.current ? 1 : 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.1 }}
 					>
 						<Step1Form />
 					</motion.div>
@@ -34,10 +34,10 @@ export function MethodologyCalculator() {
 				return (
 					<motion.div
 						key="step-2"
-						initial={{ translateX: "100%" }}
-						animate={{ translateX: "0%" }}
-						exit={{ translateX: "-100%" }}
-						transition={{ duration: 0.2 }}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.1 }}
 					>
 						<Step2Form />
 					</motion.div>
@@ -46,10 +46,10 @@ export function MethodologyCalculator() {
 				return (
 					<motion.div
 						key="step-3"
-						initial={{ translateX: "100%" }}
-						animate={{ translateX: "0%" }}
-						exit={{ translateX: "-100%" }}
-						transition={{ duration: 0.2 }}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.1 }}
 					>
 						<Step3Form />
 					</motion.div>
@@ -58,10 +58,10 @@ export function MethodologyCalculator() {
 				return (
 					<motion.div
 						key="step-4"
-						initial={{ translateX: "100%" }}
-						animate={{ translateX: "0%" }}
-						exit={{ translateX: "-100%" }}
-						transition={{ duration: 0.2 }}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.1 }}
 					>
 						<Step4Form />
 					</motion.div>
@@ -70,10 +70,10 @@ export function MethodologyCalculator() {
 				return (
 					<motion.div
 						key="step-5"
-						initial={{ translateX: "100%" }}
-						animate={{ translateX: "0%" }}
-						exit={{ translateX: "100%" }}
-						transition={{ duration: 0.2 }}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.1 }}
 					>
 						<ResultsForm />
 					</motion.div>
