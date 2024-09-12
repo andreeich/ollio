@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import type { z } from "zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
 	useMethodologyCalculator,
@@ -22,6 +22,9 @@ import { Input } from "@/components/ui/input";
 
 export function Step4Form() {
 	const methodologyCalculator = useMethodologyCalculator();
+	const [maxVariantCompliaceScore, setMaxVariantComplianceScore] = useState(
+		methodologyCalculator.step4Values?.keyCompliance || 1,
+	);
 	const form = useForm<z.infer<typeof step4Schema>>({
 		resolver: zodResolver(step4Schema),
 		defaultValues: {
@@ -75,18 +78,32 @@ export function Step4Form() {
 					<FormField
 						control={form.control}
 						name="keyCompliance"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Відповідність ключу</FormLabel>
-								<FormControl>
-									<Input placeholder="1" type="number" min={1} {...field} />
-								</FormControl>
-								<FormDescription>
-									Кількість балів за відповідність ключу.
-								</FormDescription>
-								<FormMessage />
-							</FormItem>
-						)}
+						render={({ field }) => {
+							const { onChange: onFiledChange, ...fieldProps } = field;
+							return (
+								<FormItem>
+									<FormLabel>Відповідність ключу</FormLabel>
+									<FormControl>
+										<Input
+											placeholder="1"
+											type="number"
+											min={1}
+											onChange={(e) => {
+												setMaxVariantComplianceScore(
+													Number.parseInt(e.target.value),
+												);
+												onFiledChange(e);
+											}}
+											{...fieldProps}
+										/>
+									</FormControl>
+									<FormDescription>
+										Кількість балів за відповідність ключу.
+									</FormDescription>
+									<FormMessage />
+								</FormItem>
+							);
+						}}
 					/>
 					<div className="space-y-6">
 						{fields.map((field, keyIndex) => (
@@ -105,6 +122,7 @@ export function Step4Form() {
 													placeholder="0"
 													type="number"
 													min={0}
+													max={maxVariantCompliaceScore - 1}
 													className="rounded-s-none"
 													{...field}
 												/>
