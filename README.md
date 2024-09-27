@@ -2,6 +2,9 @@
 
 **Ollio** is a web application that provides a calculator for psychology methodologies. It features a user-friendly interface, smooth animations, and accurate calculations, offering an efficient way for users to explore various psychological methods.
 
+![Methodology calculator page image](/ollio-methodology.jpg)
+
+
 ## Features
 
 - Calculator for psychology methodologies
